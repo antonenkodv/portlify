@@ -1,17 +1,14 @@
+import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator';
+import { Type } from 'class-transformer';
 
+export class CreateImageDto {
+  @IsString()
+  @IsNotEmpty()
+  @MaxLength(100)
+  description: string;
 
-import {IsNotEmpty, IsString, MaxLength} from "class-validator";
-
-export class CreateImageDto{
-
-    @IsString()
-    @IsNotEmpty()
-    @MaxLength(100)
-    description: string;
-
-    @IsString()
-    @IsNotEmpty()
-    @MaxLength(100)
-    portfolio_id: string;
-
+  @IsNumber()
+  @IsNotEmpty()
+  @Type(() => Number)
+  portfolioId: number;
 }

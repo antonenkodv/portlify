@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import {CONFIG} from "./core/config/config";
+import { CONFIG } from './core/config/config';
 
 @Controller()
 export class AppController {
@@ -8,7 +8,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    console.log(CONFIG.JWT.SECRET , CONFIG.JWT.EXPIRES_IN)
     return this.appService.getHello();
   }
 }

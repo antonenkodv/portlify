@@ -6,7 +6,7 @@ import { AuthController } from './auth.controller';
 import { UsersModule } from '../users/users.module';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
-import {CONFIG} from "../../core/config/config";
+import { CONFIG } from '../../core/config/config';
 
 @Module({
   imports: [
@@ -17,11 +17,7 @@ import {CONFIG} from "../../core/config/config";
       signOptions: { expiresIn: CONFIG.JWT.EXPIRES_IN },
     }),
   ],
-  providers: [
-    AuthService,
-    LocalStrategy,
-    JwtStrategy
-  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
 })
-export class AuthModule { }
+export class AuthModule {}

@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "go7zb4Zo4hrP",
+    "database": "portlify_db",
+    "host": "db-instance.cq9epfzq7rs9.us-east-1.rds.amazonaws.com",
+    "dialect": "postgres"
+  }
+}
