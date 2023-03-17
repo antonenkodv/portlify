@@ -20,9 +20,6 @@ import { CreateImageDto } from './dto/create.image.dto';
 import { ImagesService } from './images.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { InputFile } from '../../core/models/image/image.model';
-import { join } from 'path';
-import * as fs from 'fs';
-import * as archiver from 'archiver';
 
 @Controller('images')
 export class ImagesController {
@@ -46,8 +43,9 @@ export class ImagesController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  destroy(@CurrentUser() user: User, @Param('id') imageId: string) {
-    return this.imageService.destroy(imageId);
+  async destroy(@CurrentUser() user: User, @Param('id') imageId: string) {
+    const result = await this.imageService.destroy(user, imageId);
+    return !!result;
   }
 
   @Get()
@@ -57,27 +55,12 @@ export class ImagesController {
 
   @Get('files')
   async getAllImageFiles(@Res() response: Response) {
-    const directoryPath = join(process.cwd(), 'public');
-    const filePaths = await fs.promises.readdir(directoryPath);
-
-    const archive = archiver('zip', {
-      zlib: { level: 9 },
-    });
-    archive.on('error', (err) => {
-      throw err;
-    });
+    const result = await this.imageService.getAllImageFiles();
 
     response.setHeader('Content-Type', 'application/zip');
     response.setHeader('Content-Disposition', `attachment; filename="images.zip"`);
 
-    archive.pipe(response);
-
-    for (let filePath of filePaths) {
-      filePath = join(process.cwd(), 'public', filePath);
-      const fileStream = fs.createReadStream(filePath);
-      const fileName = filePath.split('/').pop();
-      archive.append(fileStream, { name: fileName });
-    }
-    archive.finalize();
+    result.pipe(response);
+    result.finalize();
   }
 }

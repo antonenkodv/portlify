@@ -1,6 +1,7 @@
 import { BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table } from 'sequelize-typescript';
 import { Portfolio } from '../portfolio/portfolio.model';
 import { Comment } from '../comment/comment.model';
+import { User } from '../user/user.model';
 
 export interface InputFile {
   originalname: string;
@@ -22,6 +23,13 @@ export class Image extends Model<Image> {
 
   @BelongsTo(() => Portfolio, { onDelete: 'CASCADE' })
   portfolio: Portfolio;
+
+  @ForeignKey(() => User)
+  @Column({ type: DataType.INTEGER, allowNull: false })
+  userId: number;
+
+  @BelongsTo(() => User, { onDelete: 'CASCADE' })
+  user: Portfolio;
 
   @HasMany(() => Comment, { onDelete: 'CASCADE' })
   comments: Comment[];

@@ -29,7 +29,8 @@ export class PortfoliosController {
 
   @Delete(':id')
   @UseGuards(AuthGuard('jwt'))
-  destroy(@CurrentUser() user: User, @Param('id') portfolioId: number) {
-    return this.portfoliosService.destroy(user, portfolioId);
+  async destroy(@CurrentUser() user: User, @Param('id') portfolioId: number) {
+    const result = await this.portfoliosService.destroy(user, portfolioId);
+    return !!result;
   }
 }

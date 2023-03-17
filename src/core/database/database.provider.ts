@@ -18,7 +18,7 @@ export const DatabaseProvider = SequelizeModule.forRootAsync({
     database: configService.get<string>('DB_DATABASE'),
     models: [User, Portfolio, Image, Comment],
     synchronize: true,
-    // autoLoadModels:true,
+    // autoLoadModels:true // turn on for using local db
   }),
   inject: [ConfigService],
 });

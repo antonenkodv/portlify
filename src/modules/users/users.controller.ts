@@ -10,7 +10,8 @@ export class UsersController {
 
   @Delete()
   @UseGuards(AuthGuard('jwt'))
-  destroy(@CurrentUser() user: User) {
-    return this.usersService.destroy(user);
+  async destroy(@CurrentUser() user: User) {
+    const result = await this.usersService.destroy(user);
+    return !!result;
   }
 }
