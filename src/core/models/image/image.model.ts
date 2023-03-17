@@ -29,7 +29,7 @@ export class Image extends Model<Image> {
   userId: number;
 
   @BelongsTo(() => User, { onDelete: 'CASCADE' })
-  user: Portfolio;
+  user: User;
 
   @HasMany(() => Comment, { onDelete: 'CASCADE' })
   comments: Comment[];
